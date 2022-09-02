@@ -1,6 +1,6 @@
-export const App = () => {
-    const a = 'world'
+import './scss/app.scss'
 
+export const App = () => {
     return (
         <div className="wrapper">
             <div className="header">
