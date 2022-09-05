@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 export const Sort = () => {
+    const [open, setOpen] = useState(true)
+    const [currentSortMode, setCurrentSortMode] = useState(0)
+
+    const sortModes = ['популярности', 'цене', 'алфавиту']
+
     return (
-        <div className="sort">
+        <div onClick={() => setOpen(!open)}
+             className="sort">
             <div className="sort__label">
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
@@ -11,15 +17,24 @@ export const Sort = () => {
                         fill="#2C2C2C"></path>
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <span>{sortModes[currentSortMode]}</span>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {open && (
+                <div
+                    // onClick={(e) => e.stopPropagation()}
+                    className="sort__popup">
+                    <ul>
+                        {
+                            sortModes.map((mode, i) =>
+                                <li key={mode}
+                                    onClick={() => setCurrentSortMode(i)}
+                                    className={i === currentSortMode ? 'active' : ''}>
+                                    {mode}
+                                </li>
+                            )
+                        }
+                    </ul>
+                </div>)}
         </div>
     );
 };
