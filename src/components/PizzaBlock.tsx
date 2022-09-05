@@ -1,14 +1,7 @@
 import React, {useState} from 'react';
+import {pizzaType} from "../App";
 
-type PropsType = {
-    title: string
-    price: number
-    imageUrl: string
-    sizes: number[]
-    types: number[]
-}
-
-export const PizzaBlock: React.FC<PropsType> = ({title, price, imageUrl, sizes, types}) => {
+export const PizzaBlock: React.FC<pizzaType> = ({title, price, imageUrl, sizes, types}) => {
     const [activeDoughType, setActive] = useState(0)
     const [activePizzasSize, setActivePizzasSize] = useState(0)
 

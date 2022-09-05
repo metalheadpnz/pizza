@@ -21,7 +21,6 @@ export const Sort = () => {
             </div>
             {open && (
                 <div
-                    // onClick={(e) => e.stopPropagation()}
                     className="sort__popup">
                     <ul>
                         {
