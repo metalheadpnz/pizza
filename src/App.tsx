@@ -22,13 +22,13 @@ export const App = () => {
         <div className="wrapper">
             <Header/>
             <div className="content">
-                <div className="container">
+                {/*<div className="container">*/}
                     <Routes>
                         <Route path='/' element={<Home/>}/>
                         <Route path='cart' element={<Cart/>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Routes>
-                </div>
+                {/*</div>*/}
             </div>
         </div>
     )
