@@ -5,6 +5,7 @@ import {Home} from "./pages/Home";
 import {NotFound} from "./pages/NotFound";
 import {Route, Routes} from 'react-router-dom';
 import {Cart} from "./pages/Cart";
+import { useState } from 'react';
 
 export type pizzaType = {
     category: number
@@ -18,6 +19,7 @@ export type pizzaType = {
 }
 
 export const App = () => {
+
     return (
         <div className="wrapper">
             <Header/>
