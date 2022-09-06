@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {pizzaType} from "../App";
+import {pizzaType} from "../../App";
 
 export const PizzaBlock: React.FC<pizzaType> = ({title, price, imageUrl, sizes, types}) => {
     const [activeDoughType, setActive] = useState(0)

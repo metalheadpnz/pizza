@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export const Sort = () => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const [currentSortMode, setCurrentSortMode] = useState(0)
 
     const sortModes = ['популярности', 'цене', 'алфавиту']
