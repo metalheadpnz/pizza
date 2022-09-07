@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
 
-export const Categories = () => {
+export const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
+
+type PropsTypes = {
+    setCategory: (cat: number) => void
+}
+
+export const Categories: React.FC<PropsTypes> = ({setCategory}) => {
     const [activeIndex, setActiveIndex] = useState(0)
 
     const onClickCategory = (index: number) => {
         setActiveIndex(index)
+        setCategory(index)
     }
-
-    const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
     return (
         <div className="categories">

@@ -1,8 +1,18 @@
 import React, {useState} from 'react';
 
-export const Sort = () => {
+type PropsType = {
+    setSortBy: (i: number) => void
+}
+
+export const Sort: React.FC<PropsType> = ({setSortBy}) => {
     const [open, setOpen] = useState(false)
     const [currentSortMode, setCurrentSortMode] = useState(0)
+
+    const changeSortMode = (i: number) => {
+        setCurrentSortMode(i)
+        setSortBy(i)
+    }
+
 
     const sortModes = ['популярности', 'цене', 'алфавиту']
 
@@ -26,7 +36,7 @@ export const Sort = () => {
                         {
                             sortModes.map((mode, i) =>
                                 <li key={mode}
-                                    onClick={() => setCurrentSortMode(i)}
+                                    onClick={() => changeSortMode(i)}
                                     className={i === currentSortMode ? 'active' : ''}>
                                     {mode}
                                 </li>
