@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Categories} from "../components/Сategories";
 import {Sort} from "../components/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
-import {pizzaType} from "../App";
+import {pizzaType, SearchContext} from "../App";
 import {Pagination} from "../components/Pagination/Pagination";
 
 const sortTypes = ['rating', 'price', 'title']
 
 type PropsType = {
-    searchValue: string
+
 }
 
-export const Home: React.FC<PropsType> = ({searchValue}) => {
+export const Home: React.FC<PropsType> = () => {
     const [items, setItems] = useState<pizzaType[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPAge] = useState(1)
     const [sortBy, setSortBy] = useState(0)
     const [category, setCategory] = useState<number>(0)
+    const {searchValue} = useContext(SearchContext)
 
     useEffect(() => {
         const sortParam = `&sortBy=${sortTypes[sortBy]}`
