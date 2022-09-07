@@ -2,8 +2,13 @@ import React from 'react';
 // @ts-ignore
 import logoSvg from '../assets/img/pizza-logo.svg'
 import {Link} from "react-router-dom";
+import {Search} from "./Search/Search";
 
-export const Header = () => {
+type PropsType = {
+    searchValue: string
+    setSearchValue: (value: string) => void
+}
+export const Header: React.FC<PropsType> = ({searchValue, setSearchValue}) => {
     return (
         <div className="header">
             <div className="container">
@@ -16,9 +21,10 @@ export const Header = () => {
                         </div>
                     </div>
                 </Link>
+                <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
                 <div className="header__cart">
                     <Link to="cart" className="button button--cart">
-                        <span>520 ₽</span>
+                                           <span>520 ₽</span>
                         <div className="button__delimiter"></div>
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
@@ -37,6 +43,7 @@ export const Header = () => {
                         </svg>
                         <span>3</span>
                     </Link>
+
                 </div>
             </div>
 
