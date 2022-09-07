@@ -1,26 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 export const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
 type PropsTypes = {
+    category: number
     setCategory: (cat: number) => void
 }
 
-export const Categories: React.FC<PropsTypes> = ({setCategory}) => {
-    const [activeIndex, setActiveIndex] = useState(0)
-
+export const Categories: React.FC<PropsTypes> = ({setCategory, category}) => {
     const onClickCategory = (index: number) => {
-        setActiveIndex(index)
         setCategory(index)
     }
 
     return (
         <div className="categories">
             <ul>
-                {categories.map((category, index) =>
-                    <li children={category}
+                {categories.map((catName, index) =>
+                    <li children={catName}
                         onClick={() => onClickCategory(index)}
-                        className={index === activeIndex ? 'active' : ''}
+                        className={index === category ? 'active' : ''}
                         key={index}/>
                 )}
             </ul>

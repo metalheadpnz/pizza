@@ -2,17 +2,15 @@ import React, {useState} from 'react';
 
 type PropsType = {
     setSortBy: (i: number) => void
+    sortBy: number
 }
 
-export const Sort: React.FC<PropsType> = ({setSortBy}) => {
+export const Sort: React.FC<PropsType> = ({setSortBy, sortBy}) => {
     const [open, setOpen] = useState(false)
-    const [currentSortMode, setCurrentSortMode] = useState(0)
 
     const changeSortMode = (i: number) => {
-        setCurrentSortMode(i)
         setSortBy(i)
     }
-
 
     const sortModes = ['популярности', 'цене', 'алфавиту']
 
@@ -27,7 +25,7 @@ export const Sort: React.FC<PropsType> = ({setSortBy}) => {
                         fill="#2C2C2C"></path>
                 </svg>
                 <b>Сортировка по:</b>
-                <span>{sortModes[currentSortMode]}</span>
+                <span>{sortModes[sortBy]}</span>
             </div>
             {open && (
                 <div
@@ -37,7 +35,7 @@ export const Sort: React.FC<PropsType> = ({setSortBy}) => {
                             sortModes.map((mode, i) =>
                                 <li key={mode}
                                     onClick={() => changeSortMode(i)}
-                                    className={i === currentSortMode ? 'active' : ''}>
+                                    className={i === sortBy ? 'active' : ''}>
                                     {mode}
                                 </li>
                             )
