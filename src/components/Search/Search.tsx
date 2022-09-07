@@ -1,18 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 // @ts-ignore
 import styles from "./Search.module.scss"
 // @ts-ignore
 import searchIcon from "../../assets/img/search_strong_icon.svg"
 // @ts-ignore
 import cancelIcon from "../../assets/img/cancel_close_delete_icon.svg"
+import {SearchContext} from "../../App";
 
-type PropsType = {
-    searchValue: string
-    setSearchValue: (value: string) => void
-}
+type PropsType = {}
 
-export const Search: React.FC<PropsType> = ({searchValue, setSearchValue}) => {
+export const Search: React.FC<PropsType> = () => {
 
+    const {searchValue, setSearchValue} = useContext(SearchContext)
     return (
         <div className={styles.root}>
             <img className={styles.searchIcon} src={searchIcon} alt="?"/>
