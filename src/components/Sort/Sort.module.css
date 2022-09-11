@@ -1,0 +1,13 @@
+.arrow {
+    width: 20px;
+}
+
+.arrow img {
+    position: relative;
+    bottom: 2px;
+    transition-duration: .3s;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}

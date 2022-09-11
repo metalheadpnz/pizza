@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Categories} from "../components/Сategories";
-import {Sort} from "../components/Sort";
+import {Sort} from "../components/Sort/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
 import {Pagination} from "../components/Pagination/Pagination";

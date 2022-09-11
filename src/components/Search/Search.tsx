@@ -11,7 +11,6 @@ import {updateSearchTitle} from "../../store/searchSlice";
 type PropsType = {}
 
 export const Search: React.FC<PropsType> = () => {
-    // const {searchValue, setSearchValue} = useContext(SearchContext)
     const searchValue = useAppSelector(state => state.search.searchTitle)
     const dispatch = useAppDispatch()
     const setSearchValue = (searchTitle: string) => {dispatch(updateSearchTitle(searchTitle))}
