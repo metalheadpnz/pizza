@@ -7,6 +7,7 @@ import {Pagination} from "../components/Pagination/Pagination";
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {setLoadingStatus} from "../store/appSlice";
 import {setPizzas} from "../store/pizzasSlice";
+import axios from "axios";
 
 const sortTypes = ['rating', 'price', 'title']
 
@@ -26,10 +27,9 @@ export const Home: React.FC<PropsType> = () => {
         const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
         const search = searchTitle ? `&search=${searchTitle}` : ''
         dispatch(setLoadingStatus(true))
-        fetch(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
-            .then(res => res.json())
-            .then(json => {
-                dispatch(setPizzas(json))
+        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
+            .then(res => {
+                dispatch(setPizzas(res.data))
                 dispatch(setLoadingStatus(false))
             })
         window.scrollTo(0, 0)
