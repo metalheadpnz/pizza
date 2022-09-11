@@ -13,9 +13,9 @@ const sortTypes = ['rating', 'price', 'title']
 type PropsType = {}
 
 export const Home: React.FC<PropsType> = () => {
-    const {pizzasCategoryCode,searchTitle,sortCode} = useAppSelector(state => state.search)
+    const {pizzasCategoryCode, searchTitle, sortCode} = useAppSelector(state => state.search)
     const isLoading = useAppSelector(state => state.appStatus.isLoading)
-    const items = useAppSelector(state => state.pizzas.pizzas)
+    const pizzas = useAppSelector(state => state.pizzas.pizzas)
 
     const dispatch = useAppDispatch()
 
@@ -29,15 +29,13 @@ export const Home: React.FC<PropsType> = () => {
         fetch(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
             .then(res => res.json())
             .then(json => {
-                // setItems(json)
                 dispatch(setPizzas(json))
                 dispatch(setLoadingStatus(false))
             })
         window.scrollTo(0, 0)
     }, [sortCode, pizzasCategoryCode, searchTitle, currentPage])
 
-
-    const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchTitle.toLowerCase().trim()))
+    // const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchTitle.toLowerCase().trim()))
 
     return (
         <div className="container">
