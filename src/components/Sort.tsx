@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
+import {useAppDispatch, useAppSelector} from "../redux/store";
+import {updateSortCode} from "../redux/searchSlice";
 
 type PropsType = {
-    setSortBy: (i: number) => void
-    sortBy: number
 }
 
-export const Sort: React.FC<PropsType> = ({setSortBy, sortBy}) => {
+export const Sort: React.FC<PropsType> = () => {
+    const sortCode = useAppSelector(s => s.search.sortCode)
+    const dispatch = useAppDispatch()
+
     const [open, setOpen] = useState(false)
 
     const changeSortMode = (i: number) => {
-        setSortBy(i)
+        dispatch(updateSortCode(i))
     }
 
     const sortModes = ['популярности', 'цене', 'алфавиту']
@@ -25,7 +28,7 @@ export const Sort: React.FC<PropsType> = ({setSortBy, sortBy}) => {
                         fill="#2C2C2C"></path>
                 </svg>
                 <b>Сортировка по:</b>
-                <span>{sortModes[sortBy]}</span>
+                <span>{sortModes[sortCode]}</span>
             </div>
             {open && (
                 <div
@@ -35,7 +38,7 @@ export const Sort: React.FC<PropsType> = ({setSortBy, sortBy}) => {
                             sortModes.map((mode, i) =>
                                 <li key={mode}
                                     onClick={() => changeSortMode(i)}
-                                    className={i === sortBy ? 'active' : ''}>
+                                    className={i === sortCode ? 'active' : ''}>
                                     {mode}
                                 </li>
                             )

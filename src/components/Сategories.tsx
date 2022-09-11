@@ -8,7 +8,7 @@ type PropsTypes = {}
 
 export const Categories: React.FC<PropsTypes> = () => {
     const dispatch = useAppDispatch()
-    const category = useAppSelector(state => state.search.sortPizzasCategoryCode)
+    const category = useAppSelector(state => state.search.pizzasCategoryCode)
 
     const onClickCategory = (index: number) => {
         dispatch(updateSortPizzasCategoryCode(index))
