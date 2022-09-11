@@ -1,24 +1,24 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Categories} from "../components/Сategories";
 import {Sort} from "../components/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
-import {pizzaType, SearchContext} from "../App";
+import {pizzaType} from "../App";
 import {Pagination} from "../components/Pagination/Pagination";
+import {useAppSelector} from "../redux/store";
 
 const sortTypes = ['rating', 'price', 'title']
 
-type PropsType = {
-
-}
+type PropsType = {}
 
 export const Home: React.FC<PropsType> = () => {
     const [items, setItems] = useState<pizzaType[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPAge] = useState(1)
     const [sortBy, setSortBy] = useState(0)
-    const [category, setCategory] = useState<number>(0)
-    const {searchValue} = useContext(SearchContext)
+
+    const category = useAppSelector(state => state.search.sortPizzasCategoryCode)
+    const searchValue = useAppSelector(state => state.search.searchTitle)
 
     useEffect(() => {
         const sortParam = `&sortBy=${sortTypes[sortBy]}`
@@ -32,7 +32,7 @@ export const Home: React.FC<PropsType> = () => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [sortBy, category, searchValue,currentPage])
+    }, [sortBy, category, searchValue, currentPage])
 
 
     const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchValue.toLowerCase().trim()))
@@ -40,8 +40,7 @@ export const Home: React.FC<PropsType> = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories category={category}
-                            setCategory={setCategory}/>
+                <Categories />
                 <Sort sortBy={sortBy}
                       setSortBy={setSortBy}/>
             </div>

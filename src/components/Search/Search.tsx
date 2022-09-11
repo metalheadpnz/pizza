@@ -1,17 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 // @ts-ignore
 import styles from "./Search.module.scss"
 // @ts-ignore
 import searchIcon from "../../assets/img/search_strong_icon.svg"
 // @ts-ignore
 import cancelIcon from "../../assets/img/cancel_close_delete_icon.svg"
-import {SearchContext} from "../../App";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
+import {updateSearchTitle} from "../../redux/searchSlice";
 
 type PropsType = {}
 
 export const Search: React.FC<PropsType> = () => {
+    // const {searchValue, setSearchValue} = useContext(SearchContext)
+    const searchValue = useAppSelector(state => state.search.searchTitle)
+    const dispatch = useAppDispatch()
+    const setSearchValue = (searchTitle: string) => {dispatch(updateSearchTitle(searchTitle))}
 
-    const {searchValue, setSearchValue} = useContext(SearchContext)
     return (
         <div className={styles.root}>
             <img className={styles.searchIcon} src={searchIcon} alt="?"/>

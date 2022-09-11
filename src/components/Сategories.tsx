@@ -1,15 +1,17 @@
 import React from 'react';
+import {useAppDispatch, useAppSelector} from "../redux/store";
+import {updateSortPizzasCategoryCode} from "../redux/searchSlice";
 
 export const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
-type PropsTypes = {
-    category: number
-    setCategory: (cat: number) => void
-}
+type PropsTypes = {}
 
-export const Categories: React.FC<PropsTypes> = ({setCategory, category}) => {
+export const Categories: React.FC<PropsTypes> = () => {
+    const dispatch = useAppDispatch()
+    const category = useAppSelector(state => state.search.sortPizzasCategoryCode)
+
     const onClickCategory = (index: number) => {
-        setCategory(index)
+        dispatch(updateSortPizzasCategoryCode(index))
     }
 
     return (
