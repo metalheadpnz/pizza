@@ -5,8 +5,8 @@ import styles from "./Search.module.scss"
 import searchIcon from "../../assets/img/search_strong_icon.svg"
 // @ts-ignore
 import cancelIcon from "../../assets/img/cancel_close_delete_icon.svg"
-import {useAppDispatch, useAppSelector} from "../../redux/store";
-import {updateSearchTitle} from "../../redux/searchSlice";
+import {useAppDispatch, useAppSelector} from "../../store/store";
+import {updateSearchTitle} from "../../store/searchSlice";
 
 type PropsType = {}
 

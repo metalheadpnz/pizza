@@ -3,42 +3,41 @@ import {Categories} from "../components/Сategories";
 import {Sort} from "../components/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
-import {pizzaType} from "../App";
 import {Pagination} from "../components/Pagination/Pagination";
-import {useAppDispatch, useAppSelector} from "../redux/store";
-import {setLoadingStatus} from "../redux/appSlice";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {setLoadingStatus} from "../store/appSlice";
+import {setPizzas} from "../store/pizzasSlice";
 
 const sortTypes = ['rating', 'price', 'title']
 
 type PropsType = {}
 
 export const Home: React.FC<PropsType> = () => {
-    const [items, setItems] = useState<pizzaType[]>([])
-    const [currentPage, setCurrentPAge] = useState(1)
-
-    const category = useAppSelector(state => state.search.pizzasCategoryCode)
-    const searchValue = useAppSelector(state => state.search.searchTitle)
-    const sortCode = useAppSelector(state => state.search.sortCode)
+    const {pizzasCategoryCode,searchTitle,sortCode} = useAppSelector(state => state.search)
     const isLoading = useAppSelector(state => state.appStatus.isLoading)
+    const items = useAppSelector(state => state.pizzas.pizzas)
 
     const dispatch = useAppDispatch()
 
+    const [currentPage, setCurrentPAge] = useState(1)
+
     useEffect(() => {
         const sortParam = `&sortBy=${sortTypes[sortCode]}`
-        const categoryParam = category ? `&category=${category}` : ''
-        const search = searchValue ? `&search=${searchValue}` : ''
+        const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
+        const search = searchTitle ? `&search=${searchTitle}` : ''
         dispatch(setLoadingStatus(true))
         fetch(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
             .then(res => res.json())
             .then(json => {
-                setItems(json)
+                // setItems(json)
+                dispatch(setPizzas(json))
                 dispatch(setLoadingStatus(false))
             })
         window.scrollTo(0, 0)
-    }, [sortCode, category, searchValue, currentPage])
+    }, [sortCode, pizzasCategoryCode, searchTitle, currentPage])
 
 
-    const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchValue.toLowerCase().trim()))
+    const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchTitle.toLowerCase().trim()))
 
     return (
         <div className="container">

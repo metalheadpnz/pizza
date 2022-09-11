@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../redux/store";
-import {updateSortCode} from "../redux/searchSlice";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {updateSortCode} from "../store/searchSlice";
 
 type PropsType = {
 }

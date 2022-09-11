@@ -1,6 +1,6 @@
 import React from 'react';
-import {useAppDispatch, useAppSelector} from "../redux/store";
-import {updateSortPizzasCategoryCode} from "../redux/searchSlice";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {updateSortPizzasCategoryCode} from "../store/searchSlice";
 
 export const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
