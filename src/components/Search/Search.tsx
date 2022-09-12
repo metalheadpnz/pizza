@@ -1,43 +1,33 @@
-import React, {ChangeEvent, useCallback, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 // @ts-ignore
 import styles from "./Search.module.scss"
 // @ts-ignore
 import searchIcon from "../../assets/img/search_strong_icon.svg"
 // @ts-ignore
 import cancelIcon from "../../assets/img/cancel_close_delete_icon.svg"
-import {useAppDispatch, useAppSelector} from "../../store/store";
+import {useAppDispatch} from "../../store/store";
 import {updateSearchTitle} from "../../store/searchSlice";
-// @ts-ignore
-import {debounce} from 'lodash'
-// @ts-ignore
+import useDebounce from "../../Hooks/useDebounce";
+
 
 type PropsType = {}
 
 export const Search: React.FC<PropsType> = () => {
-    const searchValue = useAppSelector(state => state.search.searchTitle)
-
     const [inputValue, setInputValue] = useState('')
-
     const dispatch = useAppDispatch()
-
+    const debounced = useDebounce(inputValue, 500)
+    useEffect(() => {
+        dispatch(updateSearchTitle(debounced))
+    }, [debounced])
     const inputRef = useRef<HTMLInputElement>(null)
-
-    const debounceInput = useCallback(
-        debounce((toBeDebounced: string) => {
-            console.log('DEB', toBeDebounced)
-            dispatch(updateSearchTitle(toBeDebounced))
-        }, 700)
-        , [searchValue])
 
     const clearSearchValue = () => {
         setInputValue('')
-        dispatch(updateSearchTitle(''))
         inputRef.current && inputRef.current.focus()
     }
 
     const onInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
-        debounceInput(e.currentTarget.value)
     }
 
     return (
