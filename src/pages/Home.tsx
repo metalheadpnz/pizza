@@ -27,15 +27,13 @@ export const Home: React.FC<PropsType> = () => {
         const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
         const search = searchTitle ? `&search=${searchTitle}` : ''
         dispatch(setLoadingStatus(true))
-        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
+        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=99${sortParam}${categoryParam}${search}`)
             .then(res => {
                 dispatch(setPizzas(res.data))
                 dispatch(setLoadingStatus(false))
             })
         window.scrollTo(0, 0)
     }, [sortCode, pizzasCategoryCode, searchTitle, currentPage])
-
-    // const pizzas = items.filter(pizza => pizza.title.toLowerCase().includes(searchTitle.toLowerCase().trim()))
 
     return (
         <div className="container">
