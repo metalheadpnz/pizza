@@ -7,6 +7,7 @@ export interface SearchStateType {
     pizzasCategoryCode: number
     sortCode: number
     sortDirection: SortDirection
+    currentPage: number
 
 }
 
@@ -14,7 +15,8 @@ const initialState: SearchStateType = {
     searchTitle: '',
     pizzasCategoryCode: 0,
     sortCode: 0,
-    sortDirection: "ASC"
+    sortDirection: "ASC",
+    currentPage: 1
 }
 
 const searchSlice = createSlice({
@@ -34,10 +36,19 @@ const searchSlice = createSlice({
             if (state.sortDirection === 'ASC') {
                 state.sortDirection = 'DESC'
             } else state.sortDirection = 'ASC'
+        },
+        changeCurrentPage(state, action: PayloadAction<number>) {
+            state.currentPage = action.payload
         }
     }
 })
 
 
-export const {updateSearchTitle, updateSortPizzasCategoryCode, updateSortCode,toggleSortDirection} = searchSlice.actions
+export const {
+    updateSearchTitle,
+    updateSortPizzasCategoryCode,
+    updateSortCode,
+    toggleSortDirection,
+    changeCurrentPage
+} = searchSlice.actions
 export default searchSlice.reducer

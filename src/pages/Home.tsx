@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Categories} from "../components/Сategories";
 import {Sort} from "../components/Sort/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
@@ -14,20 +14,18 @@ const sortTypes = ['rating', 'price', 'title']
 type PropsType = {}
 
 export const Home: React.FC<PropsType> = () => {
-    const {pizzasCategoryCode, searchTitle, sortCode} = useAppSelector(state => state.search)
+    const {pizzasCategoryCode, searchTitle, sortCode, currentPage} = useAppSelector(state => state.search)
     const isLoading = useAppSelector(state => state.appStatus.isLoading)
     const pizzas = useAppSelector(state => state.pizzas.pizzas)
 
     const dispatch = useAppDispatch()
-
-    const [currentPage, setCurrentPAge] = useState(1)
 
     useEffect(() => {
         const sortParam = `&sortBy=${sortTypes[sortCode]}`
         const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
         const search = searchTitle ? `&search=${searchTitle}` : ''
         dispatch(setLoadingStatus(true))
-        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=99${sortParam}${categoryParam}${search}`)
+        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?page=${currentPage}&limit=4${sortParam}${categoryParam}${search}`)
             .then(res => {
                 dispatch(setPizzas(res.data))
                 dispatch(setLoadingStatus(false))
@@ -48,7 +46,7 @@ export const Home: React.FC<PropsType> = () => {
                     : pizzas.map(item => <PizzaBlock key={item.id}{...item}/>)
                 }
             </div>
-            <Pagination setCurrentPAge={setCurrentPAge}/>
+            <Pagination/>
         </div>
     );
 };

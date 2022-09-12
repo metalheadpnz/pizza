@@ -15,7 +15,7 @@ type PropsType = {}
 export const Search: React.FC<PropsType> = () => {
     const [inputValue, setInputValue] = useState('')
     const dispatch = useAppDispatch()
-    const debounced = useDebounce(inputValue, 500)
+    const debounced = useDebounce(inputValue, 300)
     useEffect(() => {
         dispatch(updateSearchTitle(debounced))
     }, [debounced])
