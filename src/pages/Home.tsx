@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Categories} from "../components/Сategories";
 import {Sort} from "../components/Sort/Sort";
 import {PizzaSkeleton} from "../components/PizzaBlock/Skeleton";
@@ -29,6 +29,22 @@ export const Home: React.FC<PropsType> = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const isSearch = useRef(false)
+    const isMounted = useRef(false)
+
+    const fetchPizzas = () => {
+        const sortParam = `&sortBy=${sortTypes[sortCode]}`
+        const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
+        const search = searchTitle ? `&search=${searchTitle}` : ''
+        const queryParams = `page=${currentPage}&limit=4${sortParam}${categoryParam}${search}&order=${sortDirection.toLowerCase()}`
+        dispatch(setLoadingStatus(true))
+        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?${queryParams}`
+        )
+            .then(res => {
+                dispatch(setPizzas(res.data))
+                dispatch(setLoadingStatus(false))
+            })
+    }
 
     useEffect(() => {
         if (window.location.search) {
@@ -41,32 +57,30 @@ export const Home: React.FC<PropsType> = () => {
                 pizzasCategoryCode: params.pizzasCategoryCode ? +params.pizzasCategoryCode : 0
             }))
             //{sortProperty: 'rating', pizzasCategoryCode: '0', currentPage: '1', order: 'asc'}
+
+            isSearch.current = true
         }
     }, [])
 
     useEffect(() => {
-        const sortParam = `&sortBy=${sortTypes[sortCode]}`
-        const categoryParam = pizzasCategoryCode ? `&category=${pizzasCategoryCode}` : ''
-        const search = searchTitle ? `&search=${searchTitle}` : ''
-        const queryParams = `page=${currentPage}&limit=4${sortParam}${categoryParam}${search}&order=${sortDirection.toLowerCase()}`
-        dispatch(setLoadingStatus(true))
-        axios.get(`https://6316576e82797be77fe3b2e6.mockapi.io/items?${queryParams}`
-        )
-            .then(res => {
-                dispatch(setPizzas(res.data))
-                dispatch(setLoadingStatus(false))
-            })
+        if (!isSearch.current) {
+            fetchPizzas()
+        }
+        isSearch.current = false
         window.scrollTo(0, 0)
     }, [sortCode, pizzasCategoryCode, searchTitle, currentPage, sortDirection])
 
     useEffect(() => {
-        const queryString = qs.stringify({
-            sortProperty: sortTypes[sortCode],
-            pizzasCategoryCode,
-            currentPage,
-            order: sortDirection.toLowerCase()
-        })
-        navigate(`?${queryString}`)
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sortTypes[sortCode],
+                pizzasCategoryCode,
+                currentPage,
+                order: sortDirection.toLowerCase()
+            })
+            navigate(`?${queryString}`)
+        }
+        isMounted.current = true
     }, [sortCode, pizzasCategoryCode, searchTitle, currentPage, sortDirection])
 
     return (
