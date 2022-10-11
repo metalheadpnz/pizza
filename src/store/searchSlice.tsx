@@ -1,6 +1,16 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type SortDirection = 'ASC' | 'DESC'
+export type setFiltersAC = {
+    sortDirection: SortDirection,
+    currentPage: number,
+    sortCode: number,
+    pizzasCategoryCode: number
+    // state.sortDirection = action.payload.sortDirection
+    // state.currentPage = action.payload.currentPage
+    // state.sortCode = action.payload.sortCode
+    // state.pizzasCategoryCode = action.payload.pizzasCategoryCode
+}
 
 export interface SearchStateType {
     searchTitle: string
@@ -8,7 +18,6 @@ export interface SearchStateType {
     sortCode: number
     sortDirection: SortDirection
     currentPage: number
-
 }
 
 const initialState: SearchStateType = {
@@ -39,6 +48,12 @@ const searchSlice = createSlice({
         },
         changeCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload
+        },
+        setFilters(state, action: PayloadAction<setFiltersAC>) {
+            state.sortDirection = action.payload.sortDirection
+            state.currentPage = action.payload.currentPage
+            state.sortCode = action.payload.sortCode
+            state.pizzasCategoryCode = action.payload.pizzasCategoryCode
         }
     }
 })
@@ -49,6 +64,7 @@ export const {
     updateSortPizzasCategoryCode,
     updateSortCode,
     toggleSortDirection,
-    changeCurrentPage
+    changeCurrentPage,
+    setFilters
 } = searchSlice.actions
 export default searchSlice.reducer
