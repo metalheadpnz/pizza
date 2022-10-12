@@ -25,7 +25,10 @@ export const Sort: React.FC<PropsType> = () => {
     const sortModes = ['популярности', 'цене', 'алфавиту']
 
     return (
-        <div onClick={() => setOpen(!open)}
+        <div onClick={(e) => {
+            setOpen(!open)
+        }
+        }
              className="sort">
             <div className="sort__label">
                 <div className={styles.arrow} onClick={toggleDirection}>
