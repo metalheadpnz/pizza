@@ -1,4 +1,4 @@
-import React, {MutableRefObject, RefObject, SyntheticEvent, useEffect, useRef, useState} from 'react';
+import React, {RefObject, SyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../store/store";
 import {toggleSortDirection, updateSortCode} from "../../store/searchSlice";
 //@ts-ignore
@@ -18,9 +18,9 @@ export const Sort: React.FC<PropsType> = () => {
     useEffect(() => {
         //@ts-ignore
         const listenerHandler = (e) => {
-            // if (e.path.include(sortRef)) {
-            //     console.log('sort')
-            // } else console.log('milk')
+            if (!e.path.includes(sortRef.current)) {
+                setOpen(false)
+            }
         }
         document.body.addEventListener('click', listenerHandler)
         return () => {
@@ -32,7 +32,7 @@ export const Sort: React.FC<PropsType> = () => {
         dispatch(updateSortCode(i))
     }
     const toggleDirection = (e: SyntheticEvent) => {
-        //e.stopPropagation()
+        e.stopPropagation()
         dispatch(toggleSortDirection())
     }
 
@@ -41,7 +41,7 @@ export const Sort: React.FC<PropsType> = () => {
     return (
         <div
             ref={sortRef}
-            onClick={(e) => {
+            onClick={() => {
                 setOpen(!open)
             }
             }
