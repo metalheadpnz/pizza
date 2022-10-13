@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {MutableRefObject, RefObject, SyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../store/store";
 import {toggleSortDirection, updateSortCode} from "../../store/searchSlice";
 //@ts-ignore
@@ -11,25 +11,41 @@ type PropsType = {}
 export const Sort: React.FC<PropsType> = () => {
     const {sortCode, sortDirection} = useAppSelector(s => s.search)
     const dispatch = useAppDispatch()
+    //@ts-ignore
+    const sortRef: RefObject<HTMLDivElement> = useRef()
 
     const [open, setOpen] = useState(false)
+    useEffect(() => {
+        //@ts-ignore
+        const listenerHandler = (e) => {
+            // if (e.path.include(sortRef)) {
+            //     console.log('sort')
+            // } else console.log('milk')
+        }
+        document.body.addEventListener('click', listenerHandler)
+        return () => {
+            document.body.removeEventListener('click', listenerHandler)
+        }
+    }, [])
 
     const changeSortMode = (i: number) => {
         dispatch(updateSortCode(i))
     }
     const toggleDirection = (e: SyntheticEvent) => {
-        e.stopPropagation()
+        //e.stopPropagation()
         dispatch(toggleSortDirection())
     }
 
     const sortModes = ['популярности', 'цене', 'алфавиту']
 
     return (
-        <div onClick={(e) => {
-            setOpen(!open)
-        }
-        }
-             className="sort">
+        <div
+            ref={sortRef}
+            onClick={(e) => {
+                setOpen(!open)
+            }
+            }
+            className="sort">
             <div className="sort__label">
                 <div className={styles.arrow} onClick={toggleDirection}>
                     <img src={arrow} alt="arrow"
